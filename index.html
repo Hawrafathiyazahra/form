@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Customer</title>
+</head>
+<body>
+    <form id="formCustomer">
+        <div>
+            <h1>Form Add Customer</h1>
+            <table>
+                <tr>
+                    <td>Name</td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" name="name" id="name" placeholder="Input your email">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" name="email" id="email" placeholder="Input your email">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Role</td>
+                    <td>:</td>
+                    <td>
+                        <input type="text" name="role" id="role" placeholder="Input your role">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- <button>Submit</button> -->
+                        <input type="submit" id="submit" name="submit">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</body>
+</html>
+
+<script>
+    const formCustomer = document.getElementById("formCustomer")
+    formCustomer.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const role = document.getElementById("role").value;
+
+        console.log(name, email, role);
+
+        fetch("http://localhost:3000/api/customers", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: name,
+                email: email,
+                role: role
+                
+            })
+        }).then( (res) => {
+            if (res.ok) {
+                alert("Add customer successfully!")
+            }else{
+                alert("Add customer not successfully")
+            }
+            console.log(res);
+        }).catch((error) => {
+            alert(`Error messages: ${error.message}
+            )`)
+        })
+    })
+</script>
